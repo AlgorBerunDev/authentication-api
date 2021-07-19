@@ -18,7 +18,7 @@ class UserController extends Controller
     }
     public function test1(Request $request) {
         return response()->json([
-
+            'user' => Str::random(128),
         ]);
     }
 }

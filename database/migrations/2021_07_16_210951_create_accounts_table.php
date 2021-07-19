@@ -16,7 +16,7 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->timestamps('opened_year');
+            $table->timestamp('opened_year');
             $table->string('website')->nullable();
             $table->integer('amount_of_workers')->nullable();
             $table->foreignId('user_id')

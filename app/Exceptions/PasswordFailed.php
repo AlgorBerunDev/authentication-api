@@ -10,6 +10,6 @@ class PasswordFailed extends Exception
     public function render() {
         return response()->json([
             'description' => 'Identity or password incorrect'
-        ], Response);
+        ], 400);
     }
 }

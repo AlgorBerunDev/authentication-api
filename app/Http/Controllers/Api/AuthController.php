@@ -5,11 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Sessions;
 use App\Exceptions\TestException;
 use App\Exceptions\ValidatorException;
+use App\Exceptions\UserNotFound;
+use App\Exceptions\PasswordFailed;
+use App\Exceptions\SessionLimitted;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -40,12 +45,7 @@ class AuthController extends Controller
         ], 201);
     }
 
-    public function test(Request $request){
-        // 'identity' => 'savion11@example.org',
-        // 'password' => 'password1'
-
-
-        throw new TestException(['message' => 'test']);
+    public function login(Request $request){
 
         $validator = Validator::make($request->all(), [
             'identity' => 'required|string|max:100',
@@ -53,27 +53,30 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(
-                array_merge([
-                    'errors' => $validator->messages(),
-                    'message' => 'Validation error',
-                    'statusCode' => 0
-                ])
-                , 400);
+            throw new ValidatorException($validator->messages());
         }
 
-        try {
-            $users = User::attempt($request->all());
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => 'identity or password not condition',
-                'errors' => [],
-                'statusCode' => 0
-            ], 403);
+        $user = User::getByIdentity($request->input('identity'));
+
+        if(!$user) {
+            throw new UserNotFound;
         }
+
+        if(!Hash::check($request->input('password'), $user->password)) {
+            throw new PasswordFailed;
+        }
+        if(!Sessions::checkLimit($user)) {
+            throw new SessionLimitted;
+        }
+        $session = Sessions::createSession($user);
 
         return response()->json([
-            'users' => $users
+            'session' => $session,
+            'user' => [
+                'id' => $user->id,
+                'identity' => $user->identity,
+                // 'username' => $user->$username
+            ]
         ]);
     }
 }

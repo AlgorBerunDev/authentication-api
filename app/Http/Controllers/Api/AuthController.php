@@ -79,4 +79,6 @@ class AuthController extends Controller
             ]
         ]);
     }
+    public function sendConfirmation(){}
+    public function confirmation(){}
 }

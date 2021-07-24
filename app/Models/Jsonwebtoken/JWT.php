@@ -37,7 +37,7 @@ class JWT
         return [
             'access_token' => $access_token,
             'refresh_token' => $refresh_token,
-            'serverName' => $serverName
+            // 'serverName' => $serverName
         ];
     }
     public static function decode($token) {

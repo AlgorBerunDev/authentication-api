@@ -9,8 +9,7 @@ class PasswordFailed extends Exception
 {
     public function render() {
         return response()->json([
-            'status' => 1,
-            'error_note' => 'Identity or password incorrect'
+            'description' => 'Identity or password incorrect'
         ], Response);
     }
 }

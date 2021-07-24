@@ -30,4 +30,27 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'sparkpost' => [
+        'secret' => env('SPARKPOST_SECRET'),
+    ],
+
+    'telegram' => [
+        'token' => env('TELEGRAM', ''),
+    ],
+
+    'playMobile' => [
+        'login' => env('PLAY_MOBILE_LOGIN', ''),
+        'password' => env('PLAY_MOBILE_PASSWORD', ''),
+    ],
+
+    // 'stripe' => [
+    //     'model' => App\Domain\Users\Models\User::class,
+    //     'key' => env('STRIPE_KEY'),
+    //     'secret' => env('STRIPE_SECRET'),
+    //     'webhook' => [
+    //         'secret' => env('STRIPE_WEBHOOK_SECRET'),
+    //         'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
+    //     ],
+    // ],
+
 ];

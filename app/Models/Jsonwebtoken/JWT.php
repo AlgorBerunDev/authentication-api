@@ -4,14 +4,14 @@ namespace App\Models\Jsonwebtoken;
 
 use Illuminate\Support\Facades\App;
 
-
+use Illuminate\Support\Str;
 use Firebase\JWT\JWT as PhpJwt;
 
 class JWT
 {
     private const ALGORITM = "HS512";
 
-    public static function generateTokens($user, $secretKey, $refreshKey) {
+    public static function generateTokens(array $user, $secretKey, $refreshKey) {
         $issuedAt   = new \DateTimeImmutable();
         $expire     = $issuedAt->modify('+6 minutes')->getTimestamp();      // Add 60 seconds
         $serverName = env('APP_NAME');
@@ -54,6 +54,6 @@ class JWT
         return PhpJwt::encode($payload, $key, self::ALGORITM);
     }
     public static function generateSecretKey() {
-        return str_random(40);
+        return Str::random(40);;
     }
 }

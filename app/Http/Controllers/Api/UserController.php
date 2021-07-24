@@ -9,14 +9,10 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function test(Request $request) {
+    public function registration(Request $request) {
 
 
-        return response()->json([
-            'user' => Str::random(128),
-        ]);
-    }
-    public function test1(Request $request) {
+
         return response()->json([
             'user' => Str::random(128),
         ]);

@@ -19,7 +19,7 @@ class CreateTypeEnterpriseAndAccountsTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('enterprise_option_id')
+            $table->foreignId('type_enterprise_option_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

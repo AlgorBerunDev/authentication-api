@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
-class LanguageSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +14,8 @@ class LanguageSeeder extends Seeder
      */
     public function run()
     {
-
+        User::factory()
+            ->count(50)
+            ->create();
     }
 }

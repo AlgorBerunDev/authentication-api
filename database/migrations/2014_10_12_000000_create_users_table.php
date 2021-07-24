@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('identity')->unique();
-            $table->string('identitytype', 10)->default('not defined');
+            $table->string('identitytype', 100)->nullable();
             $table->string('username');
             $table->timestamp('verified_at')->nullable();
             $table->string('password');
@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             // Ortiqcha verify codeni yubormaslik uchun yuborilgan verify codelar sonini xisoblash uchun kerak
             // Agar kerakli limitdan oshib ketsa login_is_blocked_to kerakli vaqtgacha bloklanadi
             $table->integer('verify_code_sended_count')->default(0);
-            $table->timestamps('verify_code_sended_at')->nullable();
+            $table->timestamp('verify_code_sended_at')->nullable();
 
             // userga ortiqcha devicelar ulanishini oldini olish uchun sessiyalar soni biriktirilinadi userning o'zidan
             // ammo super_session_max_count ham mavjud u tizim administratori orqali biriktiriliniladi
@@ -34,11 +34,11 @@ class CreateUsersTable extends Migration
 
             // agar aynan shu userga logining qilish kerakli limitdan oshsa, belgilangan vaqtgacha bloklab qo'yiladi
             // (faqat logining uchun)
-            $table->timestamps('login_is_blocked_to')->nullable();
+            $table->timestamp('login_is_blocked_to')->nullable();
             // xar safar login_is_blocked_to qiymatini berishda u qancha vaqt oralig'ida blokga tushganligiga qarab yana qancha vaqtga bloklash
             // kerak bolgan vaqtni xisoblash uchun kerak
             $table->integer('login_blocked_count')->default(0);
-            $table->rememberToken();
+            $table->rememberToken()->nullable();
             $table->timestamps();
         });
     }

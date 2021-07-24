@@ -40,7 +40,7 @@ class CreateSessionsTable extends Migration
             // sessiya egasi tizimga kirish uchun created_at vaqtidan beri nechi marta verifikatsiya kodini tekshirib korganligining qiymati
             // agar kerakli limitdan oshib ketgan bo'lsa unda sessiya o'chiriliniladi va user qaytadan login qilib sessiya olishiga to'g'ri keladi
             $table->integer('verify_count')->default(0);
-            $table->timestamps('verified_at');
+            $table->timestamp('verified_at');
 
             $table->boolean('is_activated')->default(false);
             $table->timestamps();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Jsonwebtoken;
+namespace App\Services;
 
 use Illuminate\Support\Facades\App;
 

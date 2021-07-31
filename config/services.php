@@ -53,4 +53,8 @@ return [
     //     ],
     // ],
 
+    'confirmation' => [
+        'send_limit' => env('CONFIRMATION_SEND_LIMIT', 5),
+    ]
+
 ];

@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use App\Exceptions\StatusCode;
+use App\Exceptions\ErrorCode;
 
 class NotFoundOrRemoved extends Exception
 {
@@ -19,7 +19,7 @@ class NotFoundOrRemoved extends Exception
     public function render() {
         return response()->json([
             'description' => "$this->attribute not found or removed in db",
-            'status_code' => StatusCode::NOT_FOUND_OR_REMOVED
+            'error' => ErrorCode::NOT_FOUND_OR_REMOVED
         ], Response::HTTP_UNAUTHORIZED);
     }
 }

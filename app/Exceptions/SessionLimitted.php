@@ -3,14 +3,14 @@
 namespace App\Exceptions;
 
 use Exception;
-use App\Exceptions\StatusCode;
+use App\Exceptions\ErrorCode;
 
 class SessionLimitted extends Exception
 {
     public function render(){
         return response()->json([
             'description' => 'Session limited',
-            'status_code' => StatusCode::SESSION_LIMITTED
+            'error' => ErrorCode::SESSION_LIMITED
         ], 400);
     }
 }

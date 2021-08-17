@@ -29,7 +29,7 @@ class ValidatorException extends Exception
             array_merge([
                 'errors' => $result,
                 'description' => 'Validation error',
-                'status_code' => StatusCode::VALIDATOR_EXCEPTION
+                'error' => ErrorCode::VALIDATOR_EXCEPTION
             ])
             , 400);
     }

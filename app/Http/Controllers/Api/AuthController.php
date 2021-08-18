@@ -79,4 +79,24 @@ class AuthController extends Controller
             ]
         ]);
     }
+    public function sendConfirmation(Request $request) {
+
+        // send_to qaysi devicelarga confirmation codeni yuborish kerakligini aytadi
+        $validator = Validator::make($request->all(), [
+            'send_to_device' => 'required|integer|max:10',
+        ]);
+
+        if($validator->fails()){
+            throw new ValidatorException($validator->messages());
+        }
+
+        $limit_confirmation = User::getLimitConfirmation($request->get('payload')->user_id);
+
+
+        return response()->json([
+            'user_id' => $limit_confirmation,
+            'send_to_device' => $request->input('send_to_device')
+        ]);
+    }
+    public function confirmation(){}
 }

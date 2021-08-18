@@ -44,4 +44,14 @@ class User extends Authenticatable
 
         return self::where('identity', $identity)->first();
     }
+
+    /**
+     * return limit confirmation code
+     */
+    public static function getLimitConfirmation($id) {
+        $user = self::find($id)->first();
+        $send_limit = config('services.confirmation.send_limit');
+
+        return $send_limit - $user->verify_code_sended_count;
+    }
 }

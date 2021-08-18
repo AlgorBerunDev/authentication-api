@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
+use App\Exceptions\StatusCode;
 
 class ValidatorException extends Exception
 {
@@ -28,6 +29,7 @@ class ValidatorException extends Exception
             array_merge([
                 'errors' => $result,
                 'description' => 'Validation error',
+                'error' => ErrorCode::VALIDATOR_EXCEPTION
             ])
             , 400);
     }

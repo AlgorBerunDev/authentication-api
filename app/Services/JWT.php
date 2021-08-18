@@ -13,7 +13,7 @@ class JWT
 
     public static function generateTokens(array $user, $secretKey, $refreshKey) {
         $issuedAt   = new \DateTimeImmutable();
-        $expire     = $issuedAt->modify('+6 minutes')->getTimestamp();      // Add 60 seconds
+        $expire     = $issuedAt->modify('+60 minutes')->getTimestamp();      // Add 60 minutes
         $serverName = env('APP_NAME');
         $serverUrl = env('APP_URL');
 

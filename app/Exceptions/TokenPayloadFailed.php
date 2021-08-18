@@ -11,7 +11,6 @@ class TokenPayloadFailed extends Exception
         return response()->json([
             'description' => 'token payload failed',
             'error' => ErrorCode::TOKEN_PAYLOAD_FAILED
-
         ], 403);
     }
 }

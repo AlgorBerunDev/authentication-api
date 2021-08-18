@@ -130,4 +130,8 @@ class SmsService
 
         return $request;
     }
+
+    public function sendConfirmationCode($phone, $code) {
+        return $this->send($phone, "Code: $code");
+    }
 }

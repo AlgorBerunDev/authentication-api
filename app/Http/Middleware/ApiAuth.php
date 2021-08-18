@@ -9,6 +9,7 @@ use App\Models\Sessions;
 use App\Services\JWT;
 use App\Exceptions\NotFoundToken;
 use App\Exceptions\TokenPayloadFailed;
+use App\Exceptions\NotFoundOrRemoved;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
@@ -37,6 +38,11 @@ class ApiAuth
         }
 
         $session = Sessions::where('id', $decode_payload->session_id)->first();
+
+        if(!$session) {
+            throw new NotFoundOrRemoved('Session');
+        }
+
         $exploded_auth_header = explode(" ", $bearer_token);
         $token = $exploded_auth_header[1];
         $payload = array();
@@ -46,6 +52,10 @@ class ApiAuth
         } catch (\Throwable $th) {
             return response()->json(['description' => $th->getMessage()], 400);
         }
+
+        $request->merge([
+            'payload' => $payload
+        ]);
 
         return $next($request);
     }

@@ -22,22 +22,15 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->boolean('is_blocked')->default(false);
 
-            // Ortiqcha verify codeni yubormaslik uchun yuborilgan verify codelar sonini xisoblash uchun kerak
-            // Agar kerakli limitdan oshib ketsa login_is_blocked_to kerakli vaqtgacha bloklanadi
-            $table->integer('verify_code_sended_count')->default(0);
-            $table->timestamp('verify_code_sended_at')->nullable();
-
             // userga ortiqcha devicelar ulanishini oldini olish uchun sessiyalar soni biriktirilinadi userning o'zidan
             // ammo super_session_max_count ham mavjud u tizim administratori orqali biriktiriliniladi
-            $table->integer('session_max_count')->default(10); // min 1
-            $table->integer('super_session_max_count')->default(100);
+            $table->integer('session_max_count')->default(100); // min 1
+            $table->integer('super_session_max_count')->default(150);
 
             // agar aynan shu userga logining qilish kerakli limitdan oshsa, belgilangan vaqtgacha bloklab qo'yiladi
             // (faqat logining uchun)
-            $table->timestamp('login_is_blocked_to')->nullable();
-            // xar safar login_is_blocked_to qiymatini berishda u qancha vaqt oralig'ida blokga tushganligiga qarab yana qancha vaqtga bloklash
-            // kerak bolgan vaqtni xisoblash uchun kerak
-            $table->integer('login_blocked_count')->default(0);
+            $table->timestamp('confirmation_blocked')->nullable();
+            $table->timestamp('logining_blocked')->nullable();
             $table->rememberToken()->nullable();
             $table->timestamps();
         });

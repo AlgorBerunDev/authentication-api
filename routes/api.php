@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,7 +22,14 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/send_confirmation', [AuthController::class, 'sendConfirmation'])->middleware('apiauth');
-    Route::post('/confirmation', [AuthController::class, 'confirmation']);
-    // Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::post('/confirmation', [AuthController::class, 'confirmation'])->middleware('apiauth');
     // Route::get('/user-profile', [AuthController::class, 'userProfile']);
+});
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'user'
+], function ($router) {
+    Route::post('/refresh', [UserController::class, 'refresh']);
+    Route::post('/logout', [UserController::class, 'logout']);
+    Route::get('/profile', [UserController::class, 'profile']);
 });

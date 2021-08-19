@@ -48,10 +48,16 @@ class User extends Authenticatable
     /**
      * return limit confirmation code
      */
-    public static function getLimitConfirmation($id) {
-        $user = self::find($id)->first();
+    public function checkLimitConfirmation() {
         $send_limit = config('services.confirmation.send_limit');
 
-        return $send_limit - $user->verify_code_sended_count;
+        return ($send_limit - $this->verify_code_sended_count) > 0;
+    }
+    public function createCodeAndSave($session) {
+
+        $this->update([
+            'verify_code_sended_at' => now(),
+            'verify_code_sended_count' => $this->verify_code_sended_count + 1
+        ]);
     }
 }

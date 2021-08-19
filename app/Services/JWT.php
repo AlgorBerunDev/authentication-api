@@ -54,6 +54,6 @@ class JWT
         return PhpJwt::encode($payload, $key, self::ALGORITM);
     }
     public static function generateSecretKey() {
-        return Str::random(40);;
+        return Str::random(40);
     }
 }

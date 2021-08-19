@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Sessions;
+use App\Models\Confirmation;
+use App\Services\ConfirmationService;
 use App\Exceptions\TestException;
 use App\Exceptions\ValidatorException;
 use App\Exceptions\UserNotFound;
@@ -15,6 +17,7 @@ use App\Exceptions\SessionLimitted;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -89,12 +92,24 @@ class AuthController extends Controller
         if($validator->fails()){
             throw new ValidatorException($validator->messages());
         }
+        $session_id = $request->get('payload')->session_id;
+        $user_id = $request->get('payload')->user_id;
+        $code = random_int(100000, 999999);
 
-        $limit_confirmation = User::getLimitConfirmation($request->get('payload')->user_id);
-
-
+        Confirmation::create([
+            'session_id' => $session_id,
+            'user_id' => $user_id,
+            'code' => $code
+        ]);
+        ConfirmationService::sendCode([
+            'session_id' => $session_id,
+            'user_id' => $user_id,
+            'code' => $code,
+            'send_to_device' => $request->input('send_to_device')
+        ]);
         return response()->json([
-            'user_id' => $limit_confirmation,
+            'user' => $user,
+            'payload' => $request->get('payload'),
             'send_to_device' => $request->input('send_to_device')
         ]);
     }

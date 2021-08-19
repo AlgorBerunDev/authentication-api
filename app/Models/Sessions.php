@@ -44,7 +44,6 @@ class Sessions extends Model
     }
     public static function createSession($user){
         $id = $user->id;
-        $identity = $user->identity;
 
         $secretKey = JWT::generateSecretKey();
         $refreshKey = JWT::generateSecretKey();
@@ -54,8 +53,6 @@ class Sessions extends Model
             'secretKey' => $secretKey,
             'refreshKey' => $refreshKey,
             'user_id' => $id,
-            'verified_at' => now(),
-            'verify_code' => ''
         ]);
 
         $payload = [
@@ -69,6 +66,27 @@ class Sessions extends Model
 
         return array_merge([
             'is_activated' => false
+        ], $tokens);
+    }
+    public static function refreshToken($session) {
+        $id = $session->id;
+
+        $secretKey = JWT::generateSecretKey();
+        $refreshKey = JWT::generateSecretKey();
+
+        $payload = [
+            'user_id' => $id,
+            'session_id' => $session->id
+        ];
+        $tokens = JWT::generateTokens($payload, $secretKey, $refreshKey);
+
+        $session->refreshToken = $tokens['refresh_token'];
+        $session->secretKey = $secretKey;
+        $session->refreshKey = $refreshKey;
+        $session->save();
+
+        return array_merge([
+            'is_activated' => $session->is_activated
         ], $tokens);
     }
 }

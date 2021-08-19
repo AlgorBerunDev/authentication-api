@@ -1,7 +1,7 @@
 <?php
 namespace App\Exceptions;
 
-class StatusCode
+class ErrorCode
 {
     const NOT_FOUND_OR_REMOVED=1;
     const NOT_FOUND_TOKEN=2;

@@ -36,12 +36,6 @@ class CreateSessionsTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('verify_code', 6)->nullable();
-            // sessiya egasi tizimga kirish uchun created_at vaqtidan beri nechi marta verifikatsiya kodini tekshirib korganligining qiymati
-            // agar kerakli limitdan oshib ketgan bo'lsa unda sessiya o'chiriliniladi va user qaytadan login qilib sessiya olishiga to'g'ri keladi
-            $table->integer('verify_count')->default(0);
-            $table->timestamp('verified_at');
-
             $table->boolean('is_activated')->default(false);
             $table->timestamps();
         });

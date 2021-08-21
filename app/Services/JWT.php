@@ -13,7 +13,7 @@ class JWT
 
     public static function generateTokens(array $user, $secretKey, $refreshKey) {
         $issuedAt   = new \DateTimeImmutable();
-        $expire     = $issuedAt->modify('+60 minutes')->getTimestamp();      // Add 60 minutes
+        $expire     = $issuedAt->modify(config('jwt.access_expired'))->getTimestamp();      // Add 60 minutes
         $serverName = env('APP_NAME');
         $serverUrl = env('APP_URL');
 
@@ -32,7 +32,7 @@ class JWT
 
         $access_token = self::generate($payload, $secretKey);
 
-        $payload['expire'] = $issuedAt->modify('+600 minutes')->getTimestamp();
+        $payload['exp'] = $issuedAt->modify(config('jwt.refresh_expired'))->getTimestamp();
         $refresh_token = self::generate($payload, $refreshKey);
         return [
             'access_token' => $access_token,

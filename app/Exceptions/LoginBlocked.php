@@ -3,22 +3,20 @@
 namespace App\Exceptions;
 
 use Exception;
-use Symfony\Component\HttpFoundation\Response;
 use App\Exceptions\ErrorCode;
 
-class PasswordFailed extends Exception
+class LoginBlocked extends Exception
 {
     private $options;
 
     public function __construct($options = []){
         $this->options = $options;
     }
-
-    public function render() {
+    public function render(){
 
         $result = array_merge([
-            'description' => 'Identity or password incorrect',
-            'error' => ErrorCode::PASSWORD_FAILED
+            'description' => 'Login blocked',
+            'error' => ErrorCode::LOGIN_BLOCKED,
         ], $this->options);
 
         return response()->json($result, 400);

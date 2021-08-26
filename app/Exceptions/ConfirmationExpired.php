@@ -3,10 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
-use Symfony\Component\HttpFoundation\Response;
 use App\Exceptions\ErrorCode;
 
-class PasswordFailed extends Exception
+class ConfirmationExpired extends Exception
 {
     private $options;
 
@@ -14,11 +13,11 @@ class PasswordFailed extends Exception
         $this->options = $options;
     }
 
-    public function render() {
+    public function render(){
 
         $result = array_merge([
-            'description' => 'Identity or password incorrect',
-            'error' => ErrorCode::PASSWORD_FAILED
+            'description' => 'Confirmation expired',
+            'error' => ErrorCode::CONFIRMATION_EXPIRED,
         ], $this->options);
 
         return response()->json($result, 400);

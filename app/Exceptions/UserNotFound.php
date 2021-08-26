@@ -14,7 +14,6 @@ class UserNotFound extends Exception
         return response()->json([
             'description' => 'User not found or removed in db',
             'error' => ErrorCode::USER_NOT_FOUND,
-            'o' => trans('messages.welcome')
         ], 400);
     }
 }

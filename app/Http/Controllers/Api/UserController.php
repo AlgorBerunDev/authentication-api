@@ -10,11 +10,13 @@ use Firebase\JWT\ExpiredException;
 use App\Models\User;
 use App\Models\Sessions;
 use App\Exceptions\TestException;
+use App\Exceptions\TokenPayloadFailed;
 use App\Exceptions\ValidatorException;
 use App\Exceptions\UserNotFound;
 use App\Exceptions\PasswordFailed;
 use App\Exceptions\SessionLimitted;
 use App\Exceptions\NotFoundOrRemoved;
+use App\Exceptions\ErrorCode;
 
 class UserController extends Controller
 {
@@ -26,10 +28,13 @@ class UserController extends Controller
             throw new NotFoundToken;
         }
 
-        $decode_payload = JWT::decode($bearer_token);
-
-        if(!$decode_payload) {
+        $decode_payload = [];
+        try {
+            $decode_payload = JWT::decode($bearer_token);
+        } catch (\Throwable $th) {
             throw new TokenPayloadFailed;
+        } finally {
+            if(!$decode_payload) throw new TokenPayloadFailed;
         }
 
         $session = Sessions::where('id', $decode_payload->session_id)->first();
@@ -49,12 +54,12 @@ class UserController extends Controller
             $session->delete();
             return response()->json([
                 'description' => $th->getMessage(),
-                'error' => 1
+                'error' => ErrorCode::JWT_EXPIRED
             ], 400);
         } catch (\Throwable $th) {
             return response()->json([
                 'description' => $th->getMessage(),
-                'error' => 2
+                'error' => ErrorCode::JWT_FAILED
             ], 400);
         }
 
@@ -65,10 +70,13 @@ class UserController extends Controller
             'session' => $new_tokens,
             'user' => [
                 'id' => $user->id,
-                'identity' => $user->identity
-            ]
+                'identity' => $user->identity,
+                'username' => $user->username,
+            ],
+            'error' => 0
         ]);
     }
+
     public function logout(Request $request){
         $bearer_token = $request->header('Authorization');
 
@@ -76,10 +84,13 @@ class UserController extends Controller
             throw new NotFoundToken;
         }
 
-        $decode_payload = JWT::decode($bearer_token);
-
-        if(!$decode_payload) {
+        $decode_payload = [];
+        try {
+            $decode_payload = JWT::decode($bearer_token);
+        } catch (\Throwable $th) {
             throw new TokenPayloadFailed;
+        } finally {
+            if(!$decode_payload) throw new TokenPayloadFailed;
         }
 
         $session = Sessions::where('id', $decode_payload->session_id)->first();
@@ -104,7 +115,7 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'description' => $th->getMessage(),
-                'error' => 2
+                'error' => ErrorCode::JWT_FAILED
             ], 400);
         }
         $session->delete();

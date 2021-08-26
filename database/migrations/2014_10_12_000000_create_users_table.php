@@ -24,13 +24,13 @@ class CreateUsersTable extends Migration
 
             // userga ortiqcha devicelar ulanishini oldini olish uchun sessiyalar soni biriktirilinadi userning o'zidan
             // ammo super_session_max_count ham mavjud u tizim administratori orqali biriktiriliniladi
-            $table->integer('session_max_count')->default(100); // min 1
-            $table->integer('super_session_max_count')->default(150);
+            $table->integer('session_max_count')->default(config('session.max_count')); // min 1
+            $table->integer('super_session_max_count')->default(config('session.super_max_count'));
 
             // agar aynan shu userga logining qilish kerakli limitdan oshsa, belgilangan vaqtgacha bloklab qo'yiladi
             // (faqat logining uchun)
-            $table->timestamp('confirmation_blocked')->nullable();
-            $table->timestamp('logining_blocked')->nullable();
+            $table->timestamp('confirmation_blocked_to')->useCurrent();
+            $table->timestamp('login_blocked_to')->useCurrent();
             $table->rememberToken()->nullable();
             $table->timestamps();
         });

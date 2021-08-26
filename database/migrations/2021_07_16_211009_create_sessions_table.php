@@ -32,10 +32,12 @@ class CreateSessionsTable extends Migration
             $table->text('refreshToken')->nullable();
             $table->text('location')->nullable();
             $table->text('device')->nullable();
+            $table->text('fcm_token')->nullable();
             $table->foreignId('user_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->timestamp('confirmation_blocked_to')->useCurrent();
             $table->boolean('is_activated')->default(false);
             $table->timestamps();
         });

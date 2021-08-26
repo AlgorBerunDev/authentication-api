@@ -33,4 +33,5 @@ Route::group([
     Route::post('/refresh', [UserController::class, 'refresh']);
     Route::post('/logout', [UserController::class, 'logout']);
     Route::get('/me', [UserController::class, 'profile'])->middleware('apiauth');
+    Route::patch('/session_max_count', [UserController::class, 'changeSessionMaxCount'])->middleware('apiauth');
 });

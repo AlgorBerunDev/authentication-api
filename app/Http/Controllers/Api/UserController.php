@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 use App\Services\JWT;
 use Firebase\JWT\ExpiredException;
 use App\Models\User;
@@ -149,6 +150,42 @@ class UserController extends Controller
         ]);
         return response()->json([
             'session' => $session,
+            'user' => $user,
+            'error' => 0
+        ]);
+    }
+
+    public function changeSessionMaxCount(Request $request) {
+
+        $user_id = $request->get('payload')->user_id;
+        $user = User::find($user_id)->first([
+            "id",
+            "identity",
+            "username",
+            "is_blocked",
+            "session_max_count",
+            "super_session_max_count",
+            "confirmation_blocked_to",
+            "login_blocked_to",
+            "created_at",
+            "updated_at"
+        ]);
+
+        $super_session_max_count = $user->super_session_max_count;
+
+        // send_to qaysi devicelarga confirmation codeni yuborish kerakligini aytadi
+        $validator = Validator::make($request->all(), [
+            'session_max_count' => "required|integer|min:2|max:$super_session_max_count",
+        ]);
+
+        if($validator->fails()){
+            throw new ValidatorException($validator->messages());
+        }
+
+        $user->session_max_count = $request->input("session_max_count");
+        $user->save();
+
+        return response()->json([
             'user' => $user,
             'error' => 0
         ]);

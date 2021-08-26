@@ -21,19 +21,25 @@ class ConfirmationService
         $to = $user->identity;
         $code = $options['code'];
         $device = $options['send_to_device'];
+        $sended_to_devices = [
+            'email' => false,
+            'phone' => false
+        ];
 
         if($device == self::ALL) {
             $phone = SmsHelperService::clearPhone($to);
             if(SmsHelperService::isUzPhone($phone)) {
                 $smsService = new SmsService();
                 $smsService->sendConfirmationCode($phone, $code);
+                $sended_to_devices['phone'] = true;
             }
             $validator = Validator::make(['identity' => $to], [
                 'identity' => 'email:rfc,dns',
             ]);
 
             if(!$validator->fails()){
-                Mail::to("algorberun@gmail.com")->send(new SendConfirmationCode($code));
+                Mail::to($to)->send(new SendConfirmationCode($code));
+                $sended_to_devices['email'] = true;
             }
         }
 
@@ -43,7 +49,8 @@ class ConfirmationService
             ]);
 
             if(!$validator->fails()){
-                Mail::to("algorberun@gmail.com")->send(new SendConfirmationCode($code));
+                Mail::to($to)->send(new SendConfirmationCode($code));
+                $sended_to_devices['email'] = true;
             }
         }
 
@@ -52,11 +59,14 @@ class ConfirmationService
             if(SmsHelperService::isUzPhone($phone)) {
                 $smsService = new SmsService();
                 $smsService->sendConfirmationCode($phone, $code);
+                $sended_to_devices['phone'] = true;
             }
         }
 
         if($device == self::ONLY_APP) {
             //TODO: push notification ulangandan keyin yoziladi bu qismi
         }
+
+        return $sended_to_devices;
     }
 }

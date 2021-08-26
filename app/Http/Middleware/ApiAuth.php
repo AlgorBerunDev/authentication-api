@@ -13,6 +13,7 @@ use App\Exceptions\NotFoundOrRemoved;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
+use App\Exceptions\ErrorCode;
 
 class ApiAuth
 {
@@ -31,10 +32,14 @@ class ApiAuth
             throw new NotFoundToken;
         }
 
-        $decode_payload = JWT::decode($bearer_token);
+        $decode_payload = [];
+        try {
+            $decode_payload = JWT::decode($bearer_token);
 
-        if(!$decode_payload) {
+        } catch (\Throwable $th) {
             throw new TokenPayloadFailed;
+        } finally {
+            if(!$decode_payload) throw new TokenPayloadFailed;
         }
 
         $session = Sessions::where('id', $decode_payload->session_id)->first();
@@ -49,9 +54,19 @@ class ApiAuth
 
         try {
             $payload = JWT::validate($token, $session->secretKey);
+        } catch (ExpiredException $th) {
+
+            return response()->json([
+                'description' => $th->getMessage(),
+                'error' => ErrorCode::JWT_EXPIRED
+            ], 400);
         } catch (\Throwable $th) {
-            return response()->json(['description' => $th->getMessage()], 400);
+            return response()->json([
+                'description' => $th->getMessage(),
+                'error' => ErrorCode::JWT_FAILED
+            ], 400);
         }
+
 
         $request->merge([
             'payload' => $payload

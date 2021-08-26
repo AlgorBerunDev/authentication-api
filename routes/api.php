@@ -35,3 +35,10 @@ Route::group([
     Route::get('/me', [UserController::class, 'profile'])->middleware('apiauth');
     Route::patch('/session_max_count', [UserController::class, 'changeSessionMaxCount'])->middleware('apiauth');
 });
+
+Route::group([
+    'middleware' => 'apiauth',
+    'prefix' => 'sessions'
+], function ($router) {
+    Route::get('/sessions', [UserController::class, 'getSessions'])->middleware('apiauth');
+});

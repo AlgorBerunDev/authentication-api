@@ -19,6 +19,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
+    Route::get('/limits', [AuthController::class, 'limits']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/send_confirmation', [AuthController::class, 'sendConfirmation'])->middleware('apiauth');

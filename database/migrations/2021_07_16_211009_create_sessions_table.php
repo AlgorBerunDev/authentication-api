@@ -39,6 +39,7 @@ class CreateSessionsTable extends Migration
                 ->onDelete('cascade');
             $table->timestamp('confirmation_blocked_to')->useCurrent();
             $table->boolean('is_activated')->default(false);
+            $table->boolean('owner')->default(false);
             $table->timestamps();
         });
     }

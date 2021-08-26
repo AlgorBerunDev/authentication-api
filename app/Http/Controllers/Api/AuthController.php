@@ -328,11 +328,14 @@ class AuthController extends Controller
             'status' => Confirmation::VERIFIED
         ]);
 
-
+        $session_owner = Sessions::where('owner', true)->first();
         $session = Sessions::find($session_id);
-        $session->update([
-            'is_activated' => true
-        ]);
+
+        if(!$session)
+            $session->owner = true;
+
+        $session->is_activated = true;
+        $session->save();
 
 
         return response()->json([
@@ -341,6 +344,7 @@ class AuthController extends Controller
                 'id' => $session->id,
                 'user_id' => $session->user_id,
                 'is_activated' => $session->is_activated,
+                'owner' => $session->owner, //TODO: keyinchalik role berilishi kerak kop rolelarni aniqlash uchun
                 'created_at' => $session->created_at,
                 'updated_at' => $session->updated_at
             ],

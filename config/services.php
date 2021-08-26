@@ -54,7 +54,20 @@ return [
     // ],
 
     'confirmation' => [
-        'send_limit' => env('CONFIRMATION_SEND_LIMIT', 5),
-    ]
+        'send_limit' => intval(env('CONFIRMATION_SEND_LIMIT', 5)), // the number of sending the maximum verification code in the set time interval
+        'send_time' => env('CONFIRMATION_SEND_TIME', "PT10M"), // the confirmation code sending counter counts during this time interval
+        'send_block' => env('CONFIRMATION_SEND_BLOCK',"PT10M"), // block sending the confirmation code to the client for 10 minutes
+        'max_attempts' => intval(env('CONFIRMATION_MAX_ATTEMPTS', 20)), // the number of attempts to verify the verification code to the maximum
+        'validity_period' => env('CONFIRMATION_VALIDITY_PERIOD', 'PT2M'), // validity period of the confirmation code
 
+        'user_send_limit' => intval(env('CONFIRMATION_USER_SEND_LIMIT', 20)),
+        'user_send_time' => env('CONFIRMATION_USER_SEND_TIME', "PT20M"),
+        'user_send_block' => env('CONFIRMATION_USER_SEND_BLOCK', "PT20M"),
+    ],
+
+    'login_attempt' => [
+        'limit' => intval(env('LOGIN_ATTEMPT_LIMIT', 5)),
+        'period' => env('LOGIN_ATTEMPT_PERIOD', "PT10M"),
+        'block_duration' => env('LOGIN_ATTEMPT_BLOCK_DURATION', "PT10M")
+    ],
 ];

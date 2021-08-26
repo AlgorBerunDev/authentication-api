@@ -198,4 +198,10 @@ return [
 
     'same_site' => 'lax',
 
+
+
+    'max_count' => intval(env('SESSION_MAX_COUNT', 100)),
+    'super_max_count' => intval(env('SUPER_SESSION_MAX_COUNT', 150)),
+
+
 ];

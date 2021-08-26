@@ -124,4 +124,33 @@ class UserController extends Controller
             'error' => 0
         ]);
     }
+
+    public function profile(Request $request) {
+        $session_id = $request->get('payload')->session_id;
+        $user_id = $request->get('payload')->user_id;
+        $user = User::find($user_id)->first([
+            "id",
+            "identity",
+            "username",
+            "is_blocked",
+            "session_max_count",
+            "super_session_max_count",
+            "confirmation_blocked_to",
+            "login_blocked_to",
+            "created_at",
+            "updated_at"
+        ]);
+        $session = Sessions::find($session_id)->first([
+            "id",
+            "confirmation_blocked_to",
+            "is_activated",
+            "created_at",
+            "updated_at"
+        ]);
+        return response()->json([
+            'session' => $session,
+            'user' => $user,
+            'error' => 0
+        ]);
+    }
 }

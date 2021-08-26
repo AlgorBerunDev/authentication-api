@@ -32,5 +32,5 @@ Route::group([
 ], function ($router) {
     Route::post('/refresh', [UserController::class, 'refresh']);
     Route::post('/logout', [UserController::class, 'logout']);
-    Route::get('/profile', [UserController::class, 'profile']);
+    Route::get('/me', [UserController::class, 'profile'])->middleware('apiauth');
 });

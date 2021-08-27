@@ -17,6 +17,7 @@ class ErrorCode
     const LOGIN_BLOCKED=12;
     const JWT_EXPIRED=13;
     const JWT_FAILED=14;
+    const ACCESS_DENIED=15;
 }
 
 

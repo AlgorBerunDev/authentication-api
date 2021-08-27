@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\SessionController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,5 +42,7 @@ Route::group([
     'middleware' => 'apiauth',
     'prefix' => 'sessions'
 ], function ($router) {
-    Route::get('/sessions', [UserController::class, 'getSessions'])->middleware('apiauth');
+    Route::post('/', [SessionController::class, 'getSessions']);
+    Route::delete('/', [SessionController::class, 'removeSessions']);
+    Route::patch('/', [SessionController::class, 'updateFcmToken']);
 });

@@ -145,6 +145,7 @@ class UserController extends Controller
             "id",
             "confirmation_blocked_to",
             "is_activated",
+            "owner",
             "created_at",
             "updated_at"
         ]);

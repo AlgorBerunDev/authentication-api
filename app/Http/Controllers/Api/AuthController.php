@@ -331,13 +331,13 @@ class AuthController extends Controller
         $session_owner = Sessions::where('owner', true)->first();
         $session = Sessions::find($session_id);
 
-        if(!$session)
+        if(!$session_owner)
             $session->owner = true;
 
         $session->is_activated = true;
         $session->save();
 
-
+        //TODO: confirmation success bogandan keyin qaytadan confirmation code kelganda yana qaytadan bolyapti shuni oldini olib qo'yish kerak
         return response()->json([
             'description' => 'Confirmed',
             'session' => [

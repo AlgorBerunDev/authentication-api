@@ -9,7 +9,7 @@ class NotFoundToken extends Exception
 {
     public function render() {
         return response()->json([
-            'description' => 'unauthorized',
+            'message' => 'unauthorized',
             'error' => ErrorCode::NOT_FOUND_TOKEN
         ], 403);
     }

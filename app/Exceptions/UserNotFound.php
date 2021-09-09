@@ -12,7 +12,7 @@ class UserNotFound extends Exception
     public function render($request){
 
         return response()->json([
-            'description' => 'User not found or removed in db',
+            'message' => 'User not found or removed in db',
             'error' => ErrorCode::USER_NOT_FOUND,
         ], 400);
     }

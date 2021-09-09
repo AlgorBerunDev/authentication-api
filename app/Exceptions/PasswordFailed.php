@@ -17,7 +17,7 @@ class PasswordFailed extends Exception
     public function render() {
 
         $result = array_merge([
-            'description' => 'Identity or password incorrect',
+            'message' => 'Identity or password incorrect',
             'error' => ErrorCode::PASSWORD_FAILED
         ], $this->options);
 

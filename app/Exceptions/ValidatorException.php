@@ -28,7 +28,7 @@ class ValidatorException extends Exception
         return response()->json(
             array_merge([
                 'errors' => $result,
-                'description' => 'Validation error',
+                'message' => 'Validation error',
                 'error' => ErrorCode::VALIDATOR_EXCEPTION
             ])
             , 400);

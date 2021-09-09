@@ -15,7 +15,7 @@ class LoginBlocked extends Exception
     public function render(){
 
         $result = array_merge([
-            'description' => 'Login blocked',
+            'message' => 'Login blocked',
             'error' => ErrorCode::LOGIN_BLOCKED,
         ], $this->options);
 

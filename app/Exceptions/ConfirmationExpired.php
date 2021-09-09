@@ -16,7 +16,7 @@ class ConfirmationExpired extends Exception
     public function render(){
 
         $result = array_merge([
-            'description' => 'Confirmation expired',
+            'message' => 'Confirmation expired',
             'error' => ErrorCode::CONFIRMATION_EXPIRED,
         ], $this->options);
 

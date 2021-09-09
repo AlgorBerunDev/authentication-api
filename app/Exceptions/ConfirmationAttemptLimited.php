@@ -15,7 +15,7 @@ class ConfirmationAttemptLimited extends Exception
 
     public function render(){
         $result = array_merge([
-            'description' => 'Confirmation attempt limited',
+            'message' => 'Confirmation attempt limited',
             'error' => ErrorCode::CONFIRMATION_ATTEMPT_LIMITED,
         ], $this->options);
 

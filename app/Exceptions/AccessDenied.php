@@ -15,7 +15,7 @@ class AccessDenied extends Exception
 
     public function render(){
         $result = array_merge([
-            'description' => 'Access Denied',
+            'message' => 'Access Denied',
             'error' => ErrorCode::ACCESS_DENIED,
         ], $this->options);
 

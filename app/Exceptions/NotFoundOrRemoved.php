@@ -18,7 +18,7 @@ class NotFoundOrRemoved extends Exception
 
     public function render() {
         return response()->json([
-            'description' => "$this->attribute not found or removed in db",
+            'message' => "$this->attribute not found or removed in db",
             'error' => ErrorCode::NOT_FOUND_OR_REMOVED
         ], Response::HTTP_UNAUTHORIZED);
     }

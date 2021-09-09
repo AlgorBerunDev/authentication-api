@@ -9,7 +9,7 @@ class SessionLimitted extends Exception
 {
     public function render(){
         return response()->json([
-            'description' => 'Session limited',
+            'message' => 'Session limited',
             'error' => ErrorCode::SESSION_LIMITED
         ], 400);
     }

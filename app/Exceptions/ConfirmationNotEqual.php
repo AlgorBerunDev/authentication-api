@@ -16,7 +16,7 @@ class ConfirmationNotEqual extends Exception
     public function render(){
 
         $result = array_merge([
-            'description' => 'Confirmation not equal',
+            'message' => 'Confirmation not equal',
             'error' => ErrorCode::CONFIRMATION_NOT_EQUAL,
         ], $this->options);
 

@@ -17,12 +17,12 @@ class CreateCategoryTranslationsTable extends Migration
             $table->id();
 
             $table->string('title');
-            $table->text('description');
-            $table->string('info_url');
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->unsignedBigInteger('language_id');
-            $table->timestamps();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->text('description')->nullable();
+            $table->string('info_url')->nullable();
+            $table->unsignedBigInteger('category_id');
+            $table->string('locale')->index();
+            $table->unique(['category_id','locale']);
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');;
         });
     }
 

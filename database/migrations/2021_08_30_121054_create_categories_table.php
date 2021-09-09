@@ -17,8 +17,8 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name');
-            $table->string('url');
-            $table->string('name_format');
+            $table->string('url')->nullable();
+            $table->string('name_format')->nullable();
             $table->boolean('published')->default(false);
             $table->timestamp('published_at')->useCurrent();
             $table->string('icon')->nullable();

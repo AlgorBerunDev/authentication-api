@@ -73,7 +73,7 @@ class AuthController extends Controller
         ));
 
         return response()->json([
-            'description' => 'User successfully registered',
+            'message' => 'User successfully registered',
             'user' => $user,
             'error' => 0
         ], 200);
@@ -262,7 +262,7 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            'description' => 'A confirmation code has been sent to the service required to send it to the customer, try again if no message is received.',
+            'message' => 'A confirmation code has been sent to the service required to send it to the customer, try again if no message is received.',
             'sended_to_services' => $sended_to,
             'last_time_sended_count' => $session_count_sended_confirmation + 1,
             'user_last_time_sended_count' => $count_sended_confirmation + 1,
@@ -339,7 +339,7 @@ class AuthController extends Controller
 
         //TODO: confirmation success bogandan keyin qaytadan confirmation code kelganda yana qaytadan bolyapti shuni oldini olib qo'yish kerak
         return response()->json([
-            'description' => 'Confirmed',
+            'message' => 'Confirmed',
             'session' => [
                 'id' => $session->id,
                 'user_id' => $session->user_id,

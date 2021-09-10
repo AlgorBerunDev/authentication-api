@@ -5,17 +5,14 @@ namespace App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Accounts extends Model
+class Addresses extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'account_id',
         'name',
-        'founded_date',
-        'email',
-        'website',
-        'amount_of_workers',
-        'country',
-        'city',
-        'logo',
+        'lat',
+        'lon',
+        'address',
     ];
 }

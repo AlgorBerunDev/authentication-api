@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\SessionController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CategoryTranslationController;
+use App\Http\Controllers\Api\AccountController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -69,4 +70,61 @@ Route::group([
     Route::post('/', [CategoryTranslationController::class, 'create']);
     Route::patch('/{id}', [CategoryTranslationController::class, 'update']);
     Route::delete('/{id}', [CategoryTranslationController::class, 'remove']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'accounts'
+], function ($router) {
+
+    Route::get('/phone', [AccountController::class, 'getPhones']);
+    Route::get('/phone/{id}', [AccountController::class, 'getPhoneById']);
+    Route::post('/phone', [AccountController::class, 'addPhone'])->middleware('apiauth');
+    Route::patch('/phone/{id}', [AccountController::class, 'updatePhone'])->middleware('apiauth');
+    Route::delete('/phone/{id}', [AccountController::class, 'deletePhone'])->middleware('apiauth');
+
+    Route::get('/addresses', [AccountController::class, 'getAddresses']);
+    Route::get('/addresses/{id}', [AccountController::class, 'getAddressById']);
+    Route::post('/addresses', [AccountController::class, 'addAddress'])->middleware('apiauth');
+    Route::patch('/addresses/{id}', [AccountController::class, 'updateAddress'])->middleware('apiauth');
+    Route::delete('/addresses/{id}', [AccountController::class, 'deleteAddress'])->middleware('apiauth');
+
+    Route::get('/schedules/{id}', [AccountController::class, 'getScheduleById']);
+    Route::post('/schedules', [AccountController::class, 'addSchedule'])->middleware('apiauth');
+    Route::patch('/schedules/{id}', [AccountController::class, 'updateSchedule'])->middleware('apiauth');
+    Route::delete('/schedules/{id}', [AccountController::class, 'deleteSchedule'])->middleware('apiauth');
+
+    Route::get('/', [AccountController::class, 'getAccounts']);
+    Route::get('/{id}', [AccountController::class, 'getAccountById']);
+    Route::post('/', [AccountController::class, 'addAccount'])->middleware('apiauth');
+    Route::post('/update/{id}', [AccountController::class, 'updateAccount'])->middleware('apiauth');
+    Route::delete('/{id}', [AccountController::class, 'deleteAccount'])->middleware('apiauth');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'product_properties'
+], function ($router) {
+
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'products'
+], function ($router) {
+
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'messages'
+], function ($router) {
+
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'subscribe'
+], function ($router) {
+
 });

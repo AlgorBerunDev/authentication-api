@@ -18,4 +18,7 @@ class Accounts extends Model
         'city',
         'logo',
     ];
+    public function users() {
+        return $this->hasMany(UserAccounts::class, 'account_id', 'id');
+    }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Schedules extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $fillable = [
         'account_id',
         'monday_begin',
@@ -24,6 +25,7 @@ class Schedules extends Model
         'saturday_end',
         'sunday_begin',
         'sunday_end',
-        'lunch_time',
+        'lunch_time_begin',
+        'lunch_time_end',
     ];
 }

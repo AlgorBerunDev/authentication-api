@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             // (faqat logining uchun)
             $table->timestamp('confirmation_blocked_to')->useCurrent();
             $table->timestamp('login_blocked_to')->useCurrent();
+            $table->integer('max_account_create')->default(10);
             $table->rememberToken()->nullable();
             $table->timestamps();
         });

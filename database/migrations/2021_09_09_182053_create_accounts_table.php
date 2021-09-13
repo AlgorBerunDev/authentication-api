@@ -18,11 +18,11 @@ class CreateAccountsTable extends Migration
             $table->string('name');
             $table->timestamp('founded_date');
             $table->string('email')->unique();
-            $table->string('website')->unique();
+            $table->string('website')->nullable();
             $table->integer('amount_of_workers');
             $table->string('country');
             $table->string('city');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->boolean('publish')->default(false);
             $table->timestamp('published_at')->useCurrent();
             $table->integer('max_product_uploads')->default(100);

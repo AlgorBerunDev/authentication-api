@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountPhonesTable extends Migration
+class CreateUserAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateAccountPhonesTable extends Migration
      */
     public function up()
     {
-        Schema::create('account_phones', function (Blueprint $table) {
+        Schema::create('user_accounts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('account_id');
-            $table->string('phone')->unique();
+            $table->string("role")->default('owner');
             $table->timestamps();
-            $table->unique(['account_id', 'phone']);
+            $table->unique(['user_id', 'account_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
     }
@@ -30,6 +32,6 @@ class CreateAccountPhonesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account_phones');
+        Schema::dropIfExists('user_accounts');
     }
 }

@@ -73,32 +73,50 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'api',
+    'middleware' => 'apiauth',
     'prefix' => 'accounts'
 ], function ($router) {
 
-    Route::get('/phone', [AccountController::class, 'getPhones']);
+    Route::get('/phones', [AccountController::class, 'getPhones']);
+    Route::get('/phones/{account_id}', [AccountController::class, 'getPhonesByAccountId']);
     Route::get('/phone/{id}', [AccountController::class, 'getPhoneById']);
-    Route::post('/phone', [AccountController::class, 'addPhone'])->middleware('apiauth');
-    Route::patch('/phone/{id}', [AccountController::class, 'updatePhone'])->middleware('apiauth');
-    Route::delete('/phone/{id}', [AccountController::class, 'deletePhone'])->middleware('apiauth');
+    Route::post('/phones', [AccountController::class, 'addPhone']);
+    Route::patch('/phones/{id}', [AccountController::class, 'updatePhone']);
+    Route::delete('/phones/{id}', [AccountController::class, 'deletePhone']);
 
     Route::get('/addresses', [AccountController::class, 'getAddresses']);
-    Route::get('/addresses/{id}', [AccountController::class, 'getAddressById']);
-    Route::post('/addresses', [AccountController::class, 'addAddress'])->middleware('apiauth');
-    Route::patch('/addresses/{id}', [AccountController::class, 'updateAddress'])->middleware('apiauth');
-    Route::delete('/addresses/{id}', [AccountController::class, 'deleteAddress'])->middleware('apiauth');
+    Route::get('/addresses/{account_id}', [AccountController::class, 'getAddressesByAccountId']);
+    Route::get('/address/{id}', [AccountController::class, 'getAddressById']);
+    Route::post('/addresses', [AccountController::class, 'addAddress']);
+    Route::patch('/addresses/{id}', [AccountController::class, 'updateAddress']);
+    Route::delete('/addresses/{id}', [AccountController::class, 'deleteAddress']);
 
-    Route::get('/schedules/{id}', [AccountController::class, 'getScheduleById']);
-    Route::post('/schedules', [AccountController::class, 'addSchedule'])->middleware('apiauth');
-    Route::patch('/schedules/{id}', [AccountController::class, 'updateSchedule'])->middleware('apiauth');
-    Route::delete('/schedules/{id}', [AccountController::class, 'deleteSchedule'])->middleware('apiauth');
+    Route::get('/schedules/{account_id}', [AccountController::class, 'getScheduleById']);
+    Route::post('/schedules', [AccountController::class, 'addSchedule']);
+    Route::patch('/schedules/{id}', [AccountController::class, 'updateSchedule']);
+    Route::delete('/schedules/{id}', [AccountController::class, 'deleteSchedule']);
+
+    Route::get('/users/{account_id}', [AccountController::class, 'getAccountUsers']);
+    Route::post('/user', [AccountController::class, 'addUser']);
+    Route::patch('/user/{id}', [AccountController::class, 'updateUser']);
+    Route::delete('/user/{id}', [AccountController::class, 'removeUser']);
 
     Route::get('/', [AccountController::class, 'getAccounts']);
     Route::get('/{id}', [AccountController::class, 'getAccountById']);
-    Route::post('/', [AccountController::class, 'addAccount'])->middleware('apiauth');
-    Route::post('/update/{id}', [AccountController::class, 'updateAccount'])->middleware('apiauth');
-    Route::delete('/{id}', [AccountController::class, 'deleteAccount'])->middleware('apiauth');
+    Route::post('/', [AccountController::class, 'addAccount']);
+    Route::post('/update/{id}', [AccountController::class, 'updateAccount']);
+    Route::delete('/{id}', [AccountController::class, 'deleteAccount']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'search'
+], function ($router) {
+    Route::get('/users', [AccountController::class, 'searchUser']);
+    Route::get('/products', [AccountController::class, 'searchProduct']);
+    Route::get('/category', [AccountController::class, 'searchCategory']);
+    Route::get('/accounts', [AccountController::class, 'searchAccounts']);
+    Route::get('/smart', [AccountController::class, 'searchAccounts']);
 });
 
 Route::group([

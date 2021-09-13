@@ -11,7 +11,6 @@ use App\Models\Confirmation;
 use App\Models\LoginAttempt;
 use App\Services\ConfirmationService;
 use App\Services\DateIntervalService;
-use App\Exceptions\TestException;
 use App\Exceptions\ValidatorException;
 use App\Exceptions\UserNotFound;
 use App\Exceptions\PasswordFailed;

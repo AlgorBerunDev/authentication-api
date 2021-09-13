@@ -18,6 +18,7 @@ class ErrorCode
     const JWT_EXPIRED=13;
     const JWT_FAILED=14;
     const ACCESS_DENIED=15;
+    const LIMITTED=16;
 }
 
 
